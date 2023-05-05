@@ -9,6 +9,7 @@ const {
   GraphQLID,
   GraphQLInt,
   GraphQLList,
+  GraphQLNonNull, // to provide the value which is must
 } = graphql;
 
 //without mongodb
@@ -106,8 +107,8 @@ const Mutation = new GraphQLObjectType({
     addAuthor: {
       type: AuthType,
       args: {
-        name: { type: GraphQLString },
-        age: { type: GraphQLInt },
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        age: { type: new GraphQLNonNull(GraphQLInt) },
       },
       resolve(parent, args) {
         let author = new Author({
@@ -120,9 +121,9 @@ const Mutation = new GraphQLObjectType({
     addBooks: {
       type: BookType,
       args: {
-        authorId: { type: GraphQLID },
-        name: { type: GraphQLString },
-        genre: { type: GraphQLString },
+        authorId: { type: new GraphQLNonNull(GraphQLID) },
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        genre: { type: new GraphQLNonNull(GraphQLString) },
       },
       resolve(parent, args) {
         let book = new Books({
